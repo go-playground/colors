@@ -8,6 +8,12 @@ import (
 	"testing"
 )
 
+// NOTES:
+// - Run "go test" to run tests
+// - Run "gocov test | gocov report" to report on test converage by file
+// - Run "gocov test | gocov annotate -" to report on all code and functions, those ,marked with "MISS" were never called
+//
+
 func IsEqual(t *testing.T, val1, val2 interface{}) bool {
 	v1 := reflect.ValueOf(val1)
 	v2 := reflect.ValueOf(val2)
@@ -103,49 +109,114 @@ func PanicMatchesSkip(t *testing.T, skip int, fn func(), matches string) {
 
 func TestColorConversionFromHEX(t *testing.T) {
 
-	hex, _ := HEX("#5f55f5")
+	hex, _ := ParseHEX("#5f55f5")
 
 	Equal(t, hex.ToHEX().String(), "#5f55f5")
 	Equal(t, hex.ToRGB().String(), "rgb(95,85,245)")
 	Equal(t, hex.ToRGBA().String(), "rgba(95,85,245,1)")
+
+	hex, _ = ParseHEX("#5f5")
+	Equal(t, hex.ToRGB().String(), "rgb(85,255,85)")
+
+	hex, _ = ParseHEX("Bad Hex color!")
+	Equal(t, hex, nil)
 }
 
 func TestColorConversionFromRGB(t *testing.T) {
 
-	// hex, _ := HEX("#5f55f5")
+	rgb, _ := ParseRGB("rgb(95%,85%,50%)")
 
-	// Equal(t, hex.ToHEX().String(), "#5f55f5")
-	// Equal(t, hex.ToRGB().String(), "rgb(95,85,245)")
-	// Equal(t, hex.ToRGBA().String(), "rgba(95,85,245,1)")
+	Equal(t, rgb.ToRGB().String(), "rgb(242,217,128)")
+	Equal(t, rgb.ToRGBA().String(), "rgba(242,217,128,1)")
+	Equal(t, rgb.ToHEX().String(), "#f2d980")
+
+	rgb, _ = ParseRGB("rgb(95,85,245)")
+	Equal(t, rgb.ToRGB().String(), "rgb(95,85,245)")
+	Equal(t, rgb.ToRGBA().String(), "rgba(95,85,245,1)")
+	Equal(t, rgb.ToHEX().String(), "#5f55f5")
+
+	rgb, _ = RGB(95, 85, 245)
+	Equal(t, rgb.ToRGB().String(), "rgb(95,85,245)")
+	Equal(t, rgb.ToRGBA().String(), "rgba(95,85,245,1)")
+	Equal(t, rgb.ToHEX().String(), "#5f55f5")
+
+	rgb, _ = ParseRGB("BAD RGB COLOR")
+	Equal(t, rgb, nil)
+
+	rgb, _ = ParseRGB("rgb(95%,85%,245)")
+	Equal(t, rgb, nil)
+}
+
+func TestColorConversionFromRGBA(t *testing.T) {
+
+	rgba, _ := ParseRGBA("rgba(95%,85%,50%,1)")
+
+	Equal(t, rgba.ToRGB().String(), "rgb(242,217,128)")
+	Equal(t, rgba.ToRGBA().String(), "rgba(242,217,128,1)")
+	Equal(t, rgba.ToHEX().String(), "#f2d980")
+
+	rgba, _ = ParseRGBA("rgba(95,85,245,1)")
+	Equal(t, rgba.ToRGB().String(), "rgb(95,85,245)")
+	Equal(t, rgba.ToRGBA().String(), "rgba(95,85,245,1)")
+	Equal(t, rgba.ToHEX().String(), "#5f55f5")
+
+	rgba, _ = RGBA(95, 85, 245, 1)
+	Equal(t, rgba.ToRGB().String(), "rgb(95,85,245)")
+	Equal(t, rgba.ToRGBA().String(), "rgba(95,85,245,1)")
+	Equal(t, rgba.ToHEX().String(), "#5f55f5")
+
+	rgba, _ = RGBA(95, 85, 245, 6)
+	Equal(t, rgba, nil)
+
+	rgba, _ = RGBA(95, 85, 245, -1)
+	Equal(t, rgba, nil)
+
+	rgba, _ = ParseRGBA("BAD RGBA COLOR")
+	Equal(t, rgba, nil)
+
+	rgba, _ = ParseRGBA("rgba(95%,85%,245,1)")
+	Equal(t, rgba, nil)
+}
+
+func TestParseColor(t *testing.T) {
+
+	color, _ := Parse("#FFF")
+	NotEqual(t, color, nil)
+	Equal(t, reflect.TypeOf(color), reflect.TypeOf(&HEXColor{}))
+
+	color, _ = Parse("rgb(95,85,245)")
+	NotEqual(t, color, nil)
+	Equal(t, reflect.TypeOf(color), reflect.TypeOf(&RGBColor{}))
+
+	color, _ = Parse("rgba(95,85,245,1)")
+	NotEqual(t, color, nil)
+	Equal(t, reflect.TypeOf(color), reflect.TypeOf(&RGBAColor{}))
 }
 
 func TestInterfaceTypes(t *testing.T) {
 
 	fn := func(c Color) string {
 
-		// fmt.Println("HERE", c, c == nil, reflect.TypeOf(c))
 		if c == nil {
-			// fmt.Println("RETURNING")
 			return ""
 		}
 
-		// fmt.Println("CALLING String Method")
 		return c.String()
-		// return ""
 	}
 
-	h, err := HEX("#FFF")
-	// fmt.Println(h.String())
-	if err == nil {
-		c := fn(h)
-		fmt.Println(c)
-	}
+	hex, _ := ParseHEX("#FFF")
+	rgb, _ := ParseRGB("rgb(95,85,245)")
+	rgba, _ := ParseRGBA("rgba(95,85,245,1)")
+
+	fn(hex)
+	fn(rgb)
+	fn(rgba)
 }
 
 func BenchmarkSpeed(b *testing.B) {
 
 	for n := 0; n < b.N; n++ {
-		h, _ := HEX("#FFFFFF")
+		h, _ := ParseHEX("#FFFFFF")
 		h.ToRGBA()
 	}
 }

@@ -2,38 +2,50 @@ package colors
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
-
-	"gopkg.in/bluesuncorp/validator.v5"
 )
 
 const (
+	hexRegexString = "^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$"
 	hexFormat      = "#%02x%02x%02x"
 	hexShortFormat = "#%1x%1x%1x"
 	hexToRGBFactor = 17
 )
 
+var (
+	hexRegex = regexp.MustCompile(hexRegexString)
+)
+
+// HEXColor represents a HEX color
 type HEXColor struct {
 	hex string
 }
 
-func HEX(s string) (*HEXColor, *validator.FieldError) {
+// ParseHEX validates an parses the provided string into a HEXColor object
+func ParseHEX(s string) (*HEXColor, error) {
 
-	if err := validate.Field(s, "hexcolor"); err != nil {
-		return nil, err
+	s = strings.ToLower(s)
+
+	if !hexRegex.MatchString(s) {
+		return nil, ErrBadColor
 	}
 
-	return &HEXColor{hex: strings.ToLower(s)}, nil
+	return &HEXColor{hex: s}, nil
 }
 
+// String returns the string representation on the HEXColor
 func (c *HEXColor) String() string {
 	return c.hex
 }
 
+// ToHEX converts the HEXColor to a HEXColor
+// it's here to satisfy the Color interface
 func (c *HEXColor) ToHEX() *HEXColor {
 	return c
 }
 
+// ToRGB converts the HEXColor to and RGBColor
 func (c *HEXColor) ToRGB() *RGBColor {
 
 	var r, g, b uint8
@@ -50,6 +62,7 @@ func (c *HEXColor) ToRGB() *RGBColor {
 	return &RGBColor{R: r, G: g, B: b}
 }
 
+// ToRGBA converts the HEXColor to an RGBAColor
 func (c *HEXColor) ToRGBA() *RGBAColor {
 
 	rgb := c.ToRGB()
