@@ -1,4 +1,8 @@
-# colors
+#Package  colors
+================
+[![Build Status](https://travis-ci.org/bluesuncorp/colors.svg?branch=v1.0)](https://travis-ci.org/bluesuncorp/colors)
+[![GoDoc](https://godoc.org/gopkg.in/bluesuncorp/colors.v1?status.svg)](https://godoc.org/gopkg.in/bluesuncorp/colors.v1)
+
 Go color manipulation, conversion and printing library/utility
 
 this library is currently in development, not all color types such as HSL, HSV and CMYK will be included in the first release; pull requests are welcome.
@@ -31,6 +35,7 @@ rgb, err := colors.RGB(0,0,0)
 rgba, err := colors.ParseRGBA("rgba(0,0,0,1)")
 rgba, err := colors.RGBA(0,0,0,1)
 
+// don't know which color, it was user selectable
 color, err := colors.Parse("#000)
 
 color.ToRGB()   // rgb(0,0,0)
