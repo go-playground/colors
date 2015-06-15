@@ -96,7 +96,6 @@ func (c *RGBAColor) ToRGBA() *RGBAColor {
 // NOTE: this is determined only by the RGB values, if you need to take
 // the alpha into account see the IsLightAlpha function
 func (c *RGBAColor) IsLight() bool {
-
 	return c.ToRGB().IsLight()
 }
 
@@ -104,6 +103,45 @@ func (c *RGBAColor) IsLight() bool {
 // NOTE: this is determined only by the RGB values, if you need to take
 // the alpha into account see the IsLightAlpha function
 func (c *RGBAColor) IsDark() bool {
-
 	return !c.IsLight()
+}
+
+// IsLightAlpha returns whether the color is perceived to be a light color
+// based on RGBA values and the provided background color
+// algorithm based of of post here: http://stackoverflow.com/a/12228643/3158232
+func (c *RGBAColor) IsLightAlpha(bg Color) bool {
+
+	// if alpha is 1 then RGB3 == RGB1
+	if c.A == 1 {
+		return c.IsLight()
+	}
+
+	// if alpha is 0 then RGB3 == RGB2
+	if c.A == 0 {
+		return bg.IsLight()
+	}
+
+	rgb2 := bg.ToRGB()
+
+	r1 := float64(c.R)
+	g1 := float64(c.G)
+	b1 := float64(c.B)
+	r2 := float64(rgb2.R)
+	g2 := float64(rgb2.G)
+	b2 := float64(rgb2.B)
+
+	r3 := r2 + (r1-r2)*c.A
+	g3 := g2 + (g1-g2)*c.A
+	b3 := b2 + (b1-b2)*c.A
+
+	rgb, _ := RGB(uint8(r3), uint8(g3), uint8(b3))
+
+	return rgb.IsLight()
+}
+
+// IsDarkAlpha returns whether the color is perceived to be a dark color
+// based on RGBA values and the provided background color
+// algorithm based of of post here: http://stackoverflow.com/a/12228643/3158232
+func (c *RGBAColor) IsDarkAlpha(bg Color) bool {
+	return !c.IsLightAlpha(bg)
 }

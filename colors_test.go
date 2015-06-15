@@ -191,6 +191,12 @@ func TestParseColor(t *testing.T) {
 	color, _ = Parse("rgba(95,85,245,1)")
 	NotEqual(t, color, nil)
 	Equal(t, reflect.TypeOf(color), reflect.TypeOf(&RGBAColor{}))
+
+	color, _ = Parse("#ff")
+	Equal(t, color, nil)
+
+	color, _ = Parse("garbage-data")
+	Equal(t, color, nil)
 }
 
 func TestIsLightIsDark(t *testing.T) {
@@ -218,6 +224,45 @@ func TestIsLightIsDark(t *testing.T) {
 	hex, _ = ParseHEX("#3300FF")
 	Equal(t, hex.IsLight(), false)
 	Equal(t, hex.IsDark(), true)
+}
+
+func TestIsLightAlphaIsDarkAlpha(t *testing.T) {
+
+	bg, _ := RGB(255, 255, 255)
+
+	rgba, _ := RGBA(0, 0, 0, 1)
+	Equal(t, rgba.IsLightAlpha(bg), false)
+	Equal(t, rgba.IsDarkAlpha(bg), true)
+
+	rgba, _ = RGBA(0, 0, 0, 0)
+	Equal(t, rgba.IsLightAlpha(bg), true)
+	Equal(t, rgba.IsDarkAlpha(bg), false)
+
+	rgba, _ = RGBA(255, 255, 255, 1)
+	Equal(t, rgba.IsLightAlpha(bg), true)
+	Equal(t, rgba.IsDarkAlpha(bg), false)
+
+	rgba, _ = RGBA(0, 0, 0, 0.5)
+	Equal(t, rgba.IsLightAlpha(bg), false)
+	Equal(t, rgba.IsDarkAlpha(bg), true)
+
+	rgba, _ = RGBA(0, 0, 0, 0.3)
+	Equal(t, rgba.IsLightAlpha(bg), true)
+	Equal(t, rgba.IsDarkAlpha(bg), false)
+
+	rgba, _ = RGBA(240, 100, 20, 0.5)
+	Equal(t, rgba.IsLightAlpha(bg), true)
+	Equal(t, rgba.IsDarkAlpha(bg), false)
+
+	bg, _ = RGB(0, 0, 0)
+
+	rgba, _ = RGBA(132, 100, 50, 0.5)
+	Equal(t, rgba.IsLightAlpha(bg), false)
+	Equal(t, rgba.IsDarkAlpha(bg), true)
+
+	rgba, _ = RGBA(132, 100, 50, 0.7)
+	Equal(t, rgba.IsLightAlpha(bg), false)
+	Equal(t, rgba.IsDarkAlpha(bg), true)
 }
 
 func TestInterfaceTypes(t *testing.T) {

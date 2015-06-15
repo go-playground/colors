@@ -99,6 +99,5 @@ func (c *RGBColor) IsLight() bool {
 
 // IsDark returns whether the color is perceived to be a dark color
 func (c *RGBColor) IsDark() bool {
-
 	return !c.IsLight()
 }
