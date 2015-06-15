@@ -92,11 +92,17 @@ func (c *RGBAColor) ToRGBA() *RGBAColor {
 	return c
 }
 
+// IsLight returns whether the color is perceived to be a light color
+// NOTE: this is determined only by the RGB values, if you need to take
+// the alpha into account see the IsLightAlpha function
 func (c *RGBAColor) IsLight() bool {
 
 	return c.ToRGB().IsLight()
 }
 
+// IsDark returns whether the color is perceived to be a dark color
+// NOTE: this is determined only by the RGB values, if you need to take
+// the alpha into account see the IsLightAlpha function
 func (c *RGBAColor) IsDark() bool {
 
 	return !c.IsLight()

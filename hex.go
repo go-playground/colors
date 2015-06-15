@@ -70,11 +70,13 @@ func (c *HEXColor) ToRGBA() *RGBAColor {
 	return &RGBAColor{R: rgb.R, G: rgb.G, B: rgb.B, A: 1}
 }
 
+// IsLight returns whether the color is perceived to be a light color
 func (c *HEXColor) IsLight() bool {
 
 	return c.ToRGB().IsLight()
 }
 
+// IsDark returns whether the color is perceived to be a dark color
 func (c *HEXColor) IsDark() bool {
 
 	return !c.IsLight()

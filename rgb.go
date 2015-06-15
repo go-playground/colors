@@ -85,6 +85,7 @@ func (c *RGBColor) ToRGBA() *RGBAColor {
 	return &RGBAColor{R: c.R, G: c.G, B: c.B, A: 1}
 }
 
+// IsLight returns whether the color is perceived to be a light color
 func (c *RGBColor) IsLight() bool {
 
 	r := float64(c.R)
@@ -96,6 +97,7 @@ func (c *RGBColor) IsLight() bool {
 	return hsp > 130
 }
 
+// IsDark returns whether the color is perceived to be a dark color
 func (c *RGBColor) IsDark() bool {
 
 	return !c.IsLight()
