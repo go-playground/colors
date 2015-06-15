@@ -3,10 +3,25 @@ Go color manipulation, conversion and printing library/utility
 
 this library is currently in development, not all color types such as HSL, HSV and CMYK will be included in the first release; pull requests are welcome.
 
+Installation
+============
+
+Use go get.
+
+	go get gopkg.in/bluesuncorp/colors.v1
+
+or to update
+
+	go get -u gopkg.in/bluesuncorp/colors.v1
+
+Then import the validator package into your own code.
+
+	import "gopkg.in/bluesuncorp/colors.v1"
+	
 Usage and documentation
 =======================
 
-Please see ... for detailed usage docs.
+Please see http://godoc.org/gopkg.in/bluesuncorp/colors.v1 for detailed usage docs.
 
 #Example
 ```go
