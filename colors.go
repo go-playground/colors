@@ -16,6 +16,8 @@ type Color interface {
 	ToRGB() *RGBColor
 	ToRGBA() *RGBAColor
 	String() string
+	IsLight() bool // http://stackoverflow.com/a/24213274/3158232 and http://www.nbdtech.com/Blog/archive/2008/04/27/Calculating-the-Perceived-Brightness-of-a-Color.aspx
+	IsDark() bool  //for perceived luminance, not strict math
 }
 
 // Parse parses an unknown color type to it's appropriate type, or returns a ErrBadColor

@@ -69,3 +69,13 @@ func (c *HEXColor) ToRGBA() *RGBAColor {
 
 	return &RGBAColor{R: rgb.R, G: rgb.G, B: rgb.B, A: 1}
 }
+
+func (c *HEXColor) IsLight() bool {
+
+	return c.ToRGB().IsLight()
+}
+
+func (c *HEXColor) IsDark() bool {
+
+	return !c.IsLight()
+}

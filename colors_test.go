@@ -193,6 +193,33 @@ func TestParseColor(t *testing.T) {
 	Equal(t, reflect.TypeOf(color), reflect.TypeOf(&RGBAColor{}))
 }
 
+func TestIsLightIsDark(t *testing.T) {
+
+	rgb, _ := RGB(0, 0, 0)
+	Equal(t, rgb.IsLight(), false)
+	Equal(t, rgb.IsDark(), true)
+
+	rgb, _ = RGB(255, 255, 255)
+	Equal(t, rgb.IsLight(), true)
+	Equal(t, rgb.IsDark(), false)
+
+	rgba, _ := RGBA(0, 0, 0, 1)
+	Equal(t, rgba.IsLight(), false)
+	Equal(t, rgba.IsDark(), true)
+
+	rgba, _ = RGBA(255, 255, 255, 1)
+	Equal(t, rgba.IsLight(), true)
+	Equal(t, rgba.IsDark(), false)
+
+	hex, _ := ParseHEX("#99FF33")
+	Equal(t, hex.IsLight(), true)
+	Equal(t, hex.IsDark(), false)
+
+	hex, _ = ParseHEX("#3300FF")
+	Equal(t, hex.IsLight(), false)
+	Equal(t, hex.IsDark(), true)
+}
+
 func TestInterfaceTypes(t *testing.T) {
 
 	fn := func(c Color) string {
@@ -200,6 +227,9 @@ func TestInterfaceTypes(t *testing.T) {
 		if c == nil {
 			return ""
 		}
+
+		c.IsDark()
+		c.IsLight()
 
 		return c.String()
 	}

@@ -91,3 +91,13 @@ func (c *RGBAColor) ToRGB() *RGBColor {
 func (c *RGBAColor) ToRGBA() *RGBAColor {
 	return c
 }
+
+func (c *RGBAColor) IsLight() bool {
+
+	return c.ToRGB().IsLight()
+}
+
+func (c *RGBAColor) IsDark() bool {
+
+	return !c.IsLight()
+}

@@ -84,3 +84,19 @@ func (c *RGBColor) ToRGB() *RGBColor {
 func (c *RGBColor) ToRGBA() *RGBAColor {
 	return &RGBAColor{R: c.R, G: c.G, B: c.B, A: 1}
 }
+
+func (c *RGBColor) IsLight() bool {
+
+	r := float64(c.R)
+	g := float64(c.G)
+	b := float64(c.B)
+
+	hsp := math.Sqrt(0.299*math.Pow(r, 2) + 0.587*math.Pow(g, 2) + 0.114*math.Pow(b, 2))
+
+	return hsp > 130
+}
+
+func (c *RGBColor) IsDark() bool {
+
+	return !c.IsLight()
+}
