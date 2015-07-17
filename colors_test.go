@@ -30,6 +30,20 @@ func IsEqual(t *testing.T, val1, val2 interface{}) bool {
 		return true
 	}
 
+	switch v1.Kind() {
+	case reflect.Chan, reflect.Func, reflect.Interface, reflect.Map, reflect.Ptr, reflect.Slice:
+		if v1.IsNil() {
+			v1 = reflect.ValueOf(nil)
+		}
+	}
+
+	switch v2.Kind() {
+	case reflect.Chan, reflect.Func, reflect.Interface, reflect.Map, reflect.Ptr, reflect.Slice:
+		if v2.IsNil() {
+			v2 = reflect.ValueOf(nil)
+		}
+	}
+
 	v1Underlying := reflect.Zero(reflect.TypeOf(v1)).Interface()
 	v2Underlying := reflect.Zero(reflect.TypeOf(v2)).Interface()
 
@@ -48,13 +62,16 @@ func IsEqual(t *testing.T, val1, val2 interface{}) bool {
 	}
 
 CASE1:
+	// fmt.Println("CASE 1")
 	return reflect.DeepEqual(v1.Interface(), v2.Interface())
-
 CASE2:
+	// fmt.Println("CASE 2")
 	return reflect.DeepEqual(v1.Interface(), v2)
 CASE3:
+	// fmt.Println("CASE 3")
 	return reflect.DeepEqual(v1, v2.Interface())
 CASE4:
+	// fmt.Println("CASE 4")
 	return reflect.DeepEqual(v1, v2)
 }
 
@@ -197,6 +214,10 @@ func TestParseColor(t *testing.T) {
 
 	color, _ = Parse("garbage-data")
 	Equal(t, color, nil)
+
+	c, err := Parse("rgba(127,34,94,0.534556634531)")
+	Equal(t, err, nil)
+	Equal(t, reflect.TypeOf(c), reflect.TypeOf(&RGBAColor{}))
 }
 
 func TestIsLightIsDark(t *testing.T) {
