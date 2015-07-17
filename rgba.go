@@ -10,8 +10,8 @@ import (
 
 const (
 	rgbaString                    = "rgba(%d,%d,%d,%g)"
-	rgbaCaptureRegexString        = "^rgba\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*((0.[1-9]*)|[01])\\s*\\)$"
-	rgbaCaptureRegexPercentString = "^rgba\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])%\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])%\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])%\\s*,\\s*((0.[1-9]*)|[01])\\s*\\)$"
+	rgbaCaptureRegexString        = "^rgba\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])\\s*,\\s*(0\\.[0-9]*|[01])\\s*\\)$"
+	rgbaCaptureRegexPercentString = "^rgba\\(\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])%\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])%\\s*,\\s*(0|[1-9]\\d?|1\\d\\d?|2[0-4]\\d|25[0-5])%\\s*,\\s*(0\\.[0-9]*|[01])\\s*\\)$"
 )
 
 var (
@@ -34,6 +34,7 @@ func ParseRGBA(s string) (*RGBAColor, error) {
 	s = strings.ToLower(s)
 
 	var isPercent bool
+
 	vals := rgbaCaptureRegex.FindAllStringSubmatch(s, -1)
 
 	if vals == nil || len(vals) == 0 || len(vals[0]) == 0 {
