@@ -1,7 +1,7 @@
 #Package  colors
 ================
-[![Build Status](https://travis-ci.org/bluesuncorp/colors.svg?branch=v1.0)](https://travis-ci.org/bluesuncorp/colors)
-[![GoDoc](https://godoc.org/gopkg.in/bluesuncorp/colors.v1?status.svg)](https://godoc.org/gopkg.in/bluesuncorp/colors.v1)
+[![Build Status](https://semaphoreci.com/api/v1/projects/be59797f-235e-411f-82be-4fab6e3172a6/550132/badge.svg)](https://semaphoreci.com/joeybloggs/colors)
+[![GoDoc](https://godoc.org/gopkg.in/go-playground/colors.v1?status.svg)](https://godoc.org/gopkg.in/go-playground/colors.v1)
 
 Go color manipulation, conversion and printing library/utility
 
@@ -12,20 +12,20 @@ Installation
 
 Use go get.
 
-	go get gopkg.in/bluesuncorp/colors.v1
+	go get gopkg.in/go-playground/colors.v1
 
 or to update
 
-	go get -u gopkg.in/bluesuncorp/colors.v1
+	go get -u gopkg.in/go-playground/colors.v1
 
 Then import the validator package into your own code.
 
-	import "gopkg.in/bluesuncorp/colors.v1"
+	import "gopkg.in/go-playground/colors.v1"
 	
 Usage and documentation
 =======================
 
-Please see http://godoc.org/gopkg.in/bluesuncorp/colors.v1 for detailed usage docs.
+Please see http://godoc.org/gopkg.in/go-playground/colors.v1 for detailed usage docs.
 
 #Example
 ```go
