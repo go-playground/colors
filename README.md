@@ -1,4 +1,4 @@
-#Package  colors
+Package  colors
 ================
 [![Build Status](https://semaphoreci.com/api/v1/projects/be59797f-235e-411f-82be-4fab6e3172a6/550132/badge.svg)](https://semaphoreci.com/joeybloggs/colors)
 [![GoDoc](https://godoc.org/gopkg.in/go-playground/colors.v1?status.svg)](https://godoc.org/gopkg.in/go-playground/colors.v1)
