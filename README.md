@@ -29,7 +29,7 @@ Please see http://godoc.org/gopkg.in/go-playground/colors.v1 for detailed usage 
 
 #Example
 ```go
-hex, err := colors.ParseHex("#fff")
+hex, err := colors.ParseHEX("#fff")
 rgb, err := colors.ParseRGB("rgb(0,0,0)")
 rgb, err := colors.RGB(0,0,0)
 rgba, err := colors.ParseRGBA("rgba(0,0,0,1)")
