@@ -2,6 +2,7 @@ package colors
 
 import (
 	"fmt"
+	"image/color"
 	"path"
 	"reflect"
 	"runtime"
@@ -193,6 +194,18 @@ func TestColorConversionFromRGBA(t *testing.T) {
 
 	rgba, _ = ParseRGBA("rgba(95%,85%,245,1)")
 	Equal(t, rgba, nil)
+}
+
+func TestColorConversionFromStdColor(t *testing.T) {
+	rgba := FromStdColor(color.RGBA{242, 217, 128, 255})
+	Equal(t, rgba.ToRGB().String(), "rgb(242,217,128)")
+	Equal(t, rgba.ToRGBA().String(), "rgba(242,217,128,1)")
+	Equal(t, rgba.ToHEX().String(), "#f2d980")
+
+	rgba = FromStdColor(color.RGBA{95, 85, 245, 255})
+	Equal(t, rgba.ToRGB().String(), "rgb(95,85,245)")
+	Equal(t, rgba.ToRGBA().String(), "rgba(95,85,245,1)")
+	Equal(t, rgba.ToHEX().String(), "#5f55f5")
 }
 
 func TestParseColor(t *testing.T) {
