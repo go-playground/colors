@@ -36,7 +36,7 @@ rgba, err := colors.ParseRGBA("rgba(0,0,0,1)")
 rgba, err := colors.RGBA(0,0,0,1)
 
 // don't know which color, it was user selectable
-color, err := colors.Parse("#000)
+color, err := colors.Parse("#000")
 
 color.ToRGB()   // rgb(0,0,0)
 color.ToRGBA()  // rgba(0,0,0,1)
