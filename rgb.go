@@ -101,3 +101,13 @@ func (c *RGBColor) IsLight() bool {
 func (c *RGBColor) IsDark() bool {
 	return !c.IsLight()
 }
+
+// RGBA implements color.Color interface
+func (c *RGBColor) RGBA() (r, g, b, a uint32) {
+	return c.ToRGBA().RGBA()
+}
+
+// Equal reports whether c is the same color as d
+func (c *RGBColor) Equal(d Color) bool {
+	return c.ToRGBA().String() == d.ToRGBA().String()
+}

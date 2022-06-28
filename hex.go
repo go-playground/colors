@@ -79,3 +79,13 @@ func (c *HEXColor) IsLight() bool {
 func (c *HEXColor) IsDark() bool {
 	return !c.IsLight()
 }
+
+// RGBA implements color.Color interface
+func (c *HEXColor) RGBA() (r, g, b, a uint32) {
+	return c.ToRGBA().RGBA()
+}
+
+// Equal reports whether c is the same color as d
+func (c *HEXColor) Equal(d Color) bool {
+	return c.ToRGBA().String() == d.ToRGBA().String()
+}
