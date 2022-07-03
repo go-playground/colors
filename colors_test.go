@@ -208,19 +208,75 @@ func TestColorConversionFromStdColor(t *testing.T) {
 	Equal(t, rgba.ToHEX().String(), "#5f55f5")
 }
 
+func TestColorConversionFromToStdColor(t *testing.T) {
+
+	hex, _ := ParseHEX("#5f55f5")
+	r, g, b, a := hex.RGBA()
+
+	Equal(t, r, uint32(95))
+	Equal(t, g, uint32(85))
+	Equal(t, b, uint32(245))
+	Equal(t, a, uint32(1))
+
+	rgba, _ := RGBA(242, 217, 128, 1)
+	r, g, b, a = rgba.RGBA()
+
+	Equal(t, r, uint32(242))
+	Equal(t, g, uint32(217))
+	Equal(t, b, uint32(128))
+	Equal(t, a, uint32(1))
+
+	rgb, _ := RGB(242, 217, 128)
+	r, g, b, a = rgb.RGBA()
+
+	Equal(t, r, uint32(242))
+	Equal(t, g, uint32(217))
+	Equal(t, b, uint32(128))
+	Equal(t, a, uint32(1))
+}
+
+func TestColorEqual(t *testing.T) {
+
+	hex, _ := ParseHEX("#5f55f5")
+	rgb, _ := RGB(95, 85, 245)
+	rgba, _ := RGBA(95, 85, 245, 1)
+
+	Equal(t, hex.Equal(hex), true)
+	Equal(t, hex.Equal(rgb), true)
+	Equal(t, hex.Equal(rgba), true)
+	Equal(t, rgb.Equal(rgb), true)
+	Equal(t, rgb.Equal(hex), true)
+	Equal(t, rgb.Equal(rgba), true)
+	Equal(t, rgba.Equal(rgba), true)
+	Equal(t, rgba.Equal(rgb), true)
+	Equal(t, rgba.Equal(hex), true)
+
+	hex2, _ := ParseHEX("#5f55f4")
+	rgb2, _ := RGB(95, 87, 245)
+	rgba2, _ := RGBA(93, 85, 245, 1)
+
+	Equal(t, hex2.Equal(rgb2), false)
+	Equal(t, hex2.Equal(rgba2), false)
+	Equal(t, rgb2.Equal(hex2), false)
+	Equal(t, rgb2.Equal(rgba2), false)
+	Equal(t, rgba2.Equal(rgb2), false)
+	Equal(t, rgba2.Equal(hex2), false)
+
+}
+
 func TestParseColor(t *testing.T) {
 
 	color, _ := Parse("#FFF")
 	NotEqual(t, color, nil)
-	Equal(t, reflect.TypeOf(color), reflect.TypeOf(&HEXColor{}))
+	Equal(t, reflect.TypeOf(color) == reflect.TypeOf(&HEXColor{}), true)
 
 	color, _ = Parse("rgb(95,85,245)")
 	NotEqual(t, color, nil)
-	Equal(t, reflect.TypeOf(color), reflect.TypeOf(&RGBColor{}))
+	Equal(t, reflect.TypeOf(color) == reflect.TypeOf(&RGBColor{}), true)
 
 	color, _ = Parse("rgba(95,85,245,1)")
 	NotEqual(t, color, nil)
-	Equal(t, reflect.TypeOf(color), reflect.TypeOf(&RGBAColor{}))
+	Equal(t, reflect.TypeOf(color) == reflect.TypeOf(&RGBAColor{}), true)
 
 	color, _ = Parse("#ff")
 	Equal(t, color, nil)
@@ -230,7 +286,7 @@ func TestParseColor(t *testing.T) {
 
 	c, err := Parse("rgba(127,34,94,0.534556634531)")
 	Equal(t, err, nil)
-	Equal(t, reflect.TypeOf(c), reflect.TypeOf(&RGBAColor{}))
+	Equal(t, reflect.TypeOf(c) == reflect.TypeOf(&RGBAColor{}), true)
 }
 
 func TestIsLightIsDark(t *testing.T) {
