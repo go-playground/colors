@@ -209,30 +209,42 @@ func TestColorConversionFromStdColor(t *testing.T) {
 }
 
 func TestColorConversionFromToStdColor(t *testing.T) {
+	// verify that colors are equals
+	equalColors := func(t *testing.T, color Color, stdColor color.Color) {
+		r, g, b, a := color.RGBA()
+		stdR, stdG, stdB, stdA := stdColor.RGBA()
+		Equal(t, r, stdR)
+		Equal(t, g, stdG)
+		Equal(t, b, stdB)
+		Equal(t, a, stdA)
+	}
 
 	hex, _ := ParseHEX("#5f55f5")
 	r, g, b, a := hex.RGBA()
 
-	Equal(t, r, uint32(95))
-	Equal(t, g, uint32(85))
-	Equal(t, b, uint32(245))
-	Equal(t, a, uint32(1))
+	Equal(t, r, uint32(24415))
+	Equal(t, g, uint32(21845))
+	Equal(t, b, uint32(62965))
+	Equal(t, a, uint32(65535))
+	equalColors(t, hex, &color.RGBA{R: 95, G: 85, B: 245, A: 255})
 
-	rgba, _ := RGBA(242, 217, 128, 1)
+	rgba, _ := RGBA(242, 217, 128, 0.4)
 	r, g, b, a = rgba.RGBA()
 
-	Equal(t, r, uint32(242))
-	Equal(t, g, uint32(217))
-	Equal(t, b, uint32(128))
-	Equal(t, a, uint32(1))
+	Equal(t, r, uint32(62194))
+	Equal(t, g, uint32(55769))
+	Equal(t, b, uint32(32896))
+	Equal(t, a, uint32(26214))
+	equalColors(t, rgba, &color.RGBA{R: 242, G: 217, B: 128, A: 102})
 
 	rgb, _ := RGB(242, 217, 128)
 	r, g, b, a = rgb.RGBA()
 
-	Equal(t, r, uint32(242))
-	Equal(t, g, uint32(217))
-	Equal(t, b, uint32(128))
-	Equal(t, a, uint32(1))
+	Equal(t, r, uint32(62194))
+	Equal(t, g, uint32(55769))
+	Equal(t, b, uint32(32896))
+	Equal(t, a, uint32(65535))
+	equalColors(t, rgb, &color.RGBA{R: 242, G: 217, B: 128, A: 255})
 }
 
 func TestColorEqual(t *testing.T) {

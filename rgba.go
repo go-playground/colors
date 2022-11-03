@@ -158,9 +158,17 @@ func (c *RGBAColor) IsDarkAlpha(bg Color) bool {
 	return !c.IsLightAlpha(bg)
 }
 
-// RGBA implements color.Color interface
+// RGBA implements color.Color interface.
+// It returns the red, green, blue and alpha values for the color. Each value ranges within [0, 0xffff]
 func (c *RGBAColor) RGBA() (r, g, b, a uint32) {
-	return uint32(c.R), uint32(c.G), uint32(c.B), uint32(c.A)
+	r = uint32(c.R)
+	r |= r << 8
+	g = uint32(c.G)
+	g |= g << 8
+	b = uint32(c.B)
+	b |= b << 8
+	a = uint32(c.A*0xffff + .5)
+	return r, g, b, a
 }
 
 // Equal reports whether c is the same color as d

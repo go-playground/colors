@@ -32,7 +32,8 @@ type Color interface {
 	//for perceived luminance, not strict math
 	IsDark() bool
 
-	// RGBA implements std-lib color.Color interface
+	// RGBA implements std-lib color.Color interface.
+	// It returns the red, green, blue and alpha values for the color. Each value ranges within [0, 0xffff]
 	RGBA() (r, g, b, a uint32)
 
 	// Equal reports whether the colors are the same
