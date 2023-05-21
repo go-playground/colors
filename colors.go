@@ -7,7 +7,7 @@ import (
 
 var (
 	// ErrBadColor is the default bad color error
-	ErrBadColor = errors.New("Parsing of color failed, Bad Color")
+	ErrBadColor = errors.New("parsing of color failed, Bad Color")
 )
 
 // Color is the base color interface from which all others ascribe to

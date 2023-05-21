@@ -35,11 +35,11 @@ func ParseRGB(s string) (*RGBColor, error) {
 	var isPercent bool
 	vals := rgbCaptureRegex.FindAllStringSubmatch(s, -1)
 
-	if vals == nil || len(vals) == 0 || len(vals[0]) == 0 {
+	if len(vals) == 0 || len(vals[0]) == 0 {
 
 		vals = rgbCapturePercentRegex.FindAllStringSubmatch(s, -1)
 
-		if vals == nil || len(vals) == 0 || len(vals[0]) == 0 {
+		if len(vals) == 0 || len(vals[0]) == 0 {
 			return nil, ErrBadColor
 		}
 

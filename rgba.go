@@ -38,11 +38,11 @@ func ParseRGBA(s string) (*RGBAColor, error) {
 
 	vals := rgbaCaptureRegex.FindAllStringSubmatch(s, -1)
 
-	if vals == nil || len(vals) == 0 || len(vals[0]) == 0 {
+	if len(vals) == 0 || len(vals[0]) == 0 {
 
 		vals = rgbaCapturePercentRegex.FindAllStringSubmatch(s, -1)
 
-		if vals == nil || len(vals) == 0 || len(vals[0]) == 0 {
+		if len(vals) == 0 || len(vals[0]) == 0 {
 			return nil, ErrBadColor
 		}
 
