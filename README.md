@@ -1,6 +1,6 @@
 Package  colors
 ================
-![Project status](https://img.shields.io/badge/version-1.3.0-green.svg)
+![Project status](https://img.shields.io/badge/version-1.3.1-green.svg)
 [![GoDoc](https://godoc.org/github.com/go-playground/colors?status.svg)](https://pkg.go.dev/github.com/go-playground/colors)
 
 Go color manipulation, conversion and printing library/utility
